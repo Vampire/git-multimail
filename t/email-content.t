@@ -96,6 +96,11 @@ test_email_content 'emailPrefix' emailprefix '
 		-c multimailhook.emailPrefix="XXX{%(repo_shortnam)s}YYY<%(repo_shortname)s>ZZZ"
 '
 
+# Some versions of Git show an ellipsis (...). Some don't. Change
+# introduced in Git in c2f1d39897 (t4013: test new output from diff
+# --abbrev --raw, 2017-12-03), i.e. Git 2.16. We can remove this when
+# Git >= 2.16 is deployed on all machines where the testsuite is ran.
+GIT_PRINT_SHA1_ELLIPSIS=yes \
 test_email_content 'custom diff & log' diff-log '
 	test_update refs/heads/master refs/heads/master^^ \
 		-c multimailhook.refChangeShowLog=true \
